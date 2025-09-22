@@ -10,27 +10,16 @@ jobs:
         container: cuaesd/aesd-autotest:24-assignment4-buildroot
         runs-on: self-hosted
         timeout-minutes: 120
-        env:
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
         steps:
           - uses: actions/checkout@v2
           - name: Checkout submodules
             run: git submodule update --init --recursive
-          - name: Fix SSH known hosts issue
-            run: |
-              mkdir -p ~/.ssh
-              ssh-keygen -f ~/.ssh/known_hosts -R github.com || true
-              ssh-keyscan github.com >> ~/.ssh/known_hosts
-              git config --global core.sshCommand "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           - uses: webfactory/ssh-agent@v0.5.3
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          - name: Debug and setup SSH authentication
-            run: |
-              echo "SSH_AUTH_SOCK: $SSH_AUTH_SOCK"
-              ssh-add -l || echo "No SSH keys loaded"
-              ssh -T git@github.com || echo "SSH test completed"
           - name: Run full test
+            env:
+              GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
             run: ./full-test.sh
           - name: Cleanup
             if: always()
