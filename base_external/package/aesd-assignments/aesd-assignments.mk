@@ -10,7 +10,7 @@ AESD_ASSIGNMENTS_VERSION = 'a082ed2c996026047f80e1f0c354dda03ea20972'
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
-AESD_ASSIGNMENTS_SITE = 'git@github.com:cu-ecen-aeld/assignments3-and-later-hawa7555.git'
+AESD_ASSIGNMENTS_SITE = 'https://github.com/cu-ecen-aeld/assignments3-and-later-hawa7555.git'
 AESD_ASSIGNMENTS_SITE_METHOD = git
 AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
 
