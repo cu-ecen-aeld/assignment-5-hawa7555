@@ -11,16 +11,18 @@ jobs:
         runs-on: self-hosted
         timeout-minutes: 120
         env:
-             GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
         steps:
           - uses: actions/checkout@v2
           - name: Checkout submodules
             run: git submodule update --init --recursive
-          - name: Clear SSH known hosts
+          - name: Fix SSH known hosts issue
             run: |
-              mkdir -p ~/.ssh  
-              rm -f ~/.ssh/known_hosts
+              mkdir -p ~/.ssh
+              ssh-keygen -f ~/.ssh/known_hosts -R github.com || true
               ssh-keyscan github.com >> ~/.ssh/known_hosts
+              export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+              git config --global core.sshCommand "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           - uses: webfactory/ssh-agent@v0.5.3
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
