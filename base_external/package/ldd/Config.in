@@ -1,0 +1,4 @@
+config BR2_PACKAGE_LDD
+	bool "bool"
+	help
+	  LDD misc and scull modules
