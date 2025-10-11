@@ -1,0 +1,29 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Loading scull"
+        cd /lib/modules/$(uname -r)/extra && /usr/bin/scull_load
+
+        echo "Loading faulty"  
+        cd /lib/modules/$(uname -r)/extra && /usr/bin/module_load faulty
+
+       echo "Loading hello"
+       modprobe hello
+
+        ;;
+    stop)
+        echo "Unloading scull"
+       /usr/bin/scull_unload
+
+       echo "Unloading faulty"
+       /usr/bin/module_unload faulty
+    
+       echo "Unloading hello"
+       rmmod hello
+        ;;
+       *)
+    exit 1
+   esac
+exit 0
+
