@@ -6,7 +6,7 @@
 ##############################################################
 
 LDD_VERSION = 'd7d4a5b97be6c71c0d0977191cd08bfb689ff91b'
-LDD_SITE = 'git@github.com:cu-ecen-aeld/assignment-7-hawa7555.git'
+LDD_SITE = 'https://github.com/cu-ecen-aeld/assignment-7-hawa7555.git'
 LDD_SITE_METHOD = git
 LDD_GIT_SUBMODULES = YES
 
